@@ -1,5 +1,7 @@
 // const { fetchProducts } = require('./helpers/fetchProducts');
 
+// const { fetchItem } = require("./helpers/fetchItem");
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -54,7 +56,9 @@ const list = document.querySelector('.items');
 list.appendChild(item);
 });
 };
+
 window.onload = async () => { 
-  fetchProducts('computador');
+  // fetchProducts('computador');
   await printProducts();
+  fetchItem('MLB1615760527');
 };
