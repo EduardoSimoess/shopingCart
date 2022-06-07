@@ -36,8 +36,10 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 
 const cartItemClickListener = (event) => {};
 let counter = 0;
-const click = () => {
-  
+if (JSON.parse(localStorage.getItem('counter')) === null) {
+  counter = 0;
+} else {
+  counter = JSON.parse(localStorage.getItem('counter'));
 }
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -46,6 +48,10 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', () => {
     li.remove();
     localStorage.clear();
+    const others = document.getElementsByClassName('cart__item');
+    for (let index = 0; index < others.length; index += 1) {
+     localStorage.setItem(index, others[index].innerHTML);
+    }
   });
   return li;
 };
@@ -73,10 +79,7 @@ const printPrice = async () => {
     const itemSku = (document.getElementsByClassName('item__sku')[index]).innerText;
     const priceObj = await fetchItem(itemSku);
     const { price } = priceObj;
-    const objData = { sku: id,
-      name: title,
-      salePrice: price,
-    };
+    const objData = { sku: id, name: title, salePrice: price };
     const li = createCartItemElement(objData);
     button.addEventListener('click', () => {
       const list = document.querySelector('.cart__items');
@@ -85,39 +88,29 @@ const printPrice = async () => {
       const items = getSavedCartItems('cartItems');
       localStorage.setItem(counter, items);
       counter += 1;
-      // get();
-      // if(counter > 1) {
-      //   list.removeChild(list.firstElementChild);
-      // }
     });
   });
 };
 
-// const saveList = () => {
-//   const list = document.getElementsByClassName('cart__item');
-//   console.log(list);
-//   saveCartItems(list);
-// };
 const get = () => {
   for (let index = 0; index <= 10; index += 1) {
     const nova = getSavedCartItems(index);
     const item = document.createElement('li');
     item.innerText = nova;
-    console.log(item);
-    const list = document.querySelector('.cart__items');
-    list.appendChild(item);
-    item.addEventListener('click', () => {
-      item.remove();
-      localStorage.removeItem(index);
-    });
+    if (nova !== null) {      
+      const list = document.querySelector('.cart__items');
+      list.appendChild(item);
+      item.addEventListener('click', () => {
+        item.remove();
+        localStorage.removeItem(index);
+      });
+    }
   }
   localStorage.removeItem('cartItems');
 };
+localStorage.setItem('counter', JSON.stringify(counter));
 window.onload = async () => {
-  // fetchProducts('computador');
   await printProducts();
-  // fetchItem('MLB1615760527');
   await printPrice();
-  // saveList();
   get();
 };
