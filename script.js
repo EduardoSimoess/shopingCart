@@ -129,6 +129,19 @@ const get = () => {
   localStorage.removeItem('cartItems');
 };
 
+const clearButton = document.querySelector('.empty-cart');
+clearButton.addEventListener('click', () => {
+  const array = document.getElementsByClassName('cart__item');
+  const stopper = array.length;
+  for (let index = 0; index < stopper; index += 1) {
+    const first = array[0];
+    console.log(first);
+    first.remove();
+  }
+  localStorage.clear();
+  const price = document.querySelector('.total-price');
+  price.innerText = 0;
+});
 localStorage.setItem('counter', JSON.stringify(counter));
 window.onload = async () => {
   await printProducts();
