@@ -26,9 +26,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {};
 const payPrice = () => {
   let cost = 0;
   const listItems = document.getElementsByClassName('cart__item');
@@ -45,7 +42,7 @@ other[0].remove();
 const priceHtml = document.createElement('div');
 priceHtml.className = 'total-price';
 const priceString = cost.toString();
-priceHtml.innerText = priceString;
+priceHtml.innerText = `Valor da compra: R$ ${priceString}`;
 const cart = document.querySelector('.cart');
 cart.appendChild(priceHtml);
 };
@@ -69,7 +66,7 @@ const createCartItemElement = async ({ sku, name, salePrice }) => {
      localStorage.setItem(index, others[index].innerHTML);
     }
     cost = 0;
-    await payPrice();
+    payPrice();
   });
   return li;
 };
@@ -150,6 +147,7 @@ clearButton.addEventListener('click', () => {
   localStorage.clear();
   const price = document.querySelector('.total-price');
   price.innerText = 0;
+  price.remove();
 });
 
 localStorage.setItem('counter', JSON.stringify(counter));
