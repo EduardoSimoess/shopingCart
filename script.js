@@ -123,6 +123,7 @@ const get = () => {
   for (let index = 0; index <= 10; index += 1) {
     const nova = getSavedCartItems(index);
     const item = document.createElement('li');
+    item.className = 'cart__item';
     item.innerText = nova;
     if (nova !== null) { 
       list.appendChild(item);
@@ -155,4 +156,5 @@ window.onload = async () => {
   await printProducts();
   await printPrice();
   get();
+  payPrice();
 };
