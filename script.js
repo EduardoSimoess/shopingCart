@@ -78,6 +78,14 @@ page.appendChild(loading);
 const removeLoading = () => {
 loading.remove();
 };
+const color = (item) => {
+  item.addEventListener('mouseover', () => {
+    item.style.backgroundColor = 'rgb(153, 51, 153)';
+    });
+    item.addEventListener('mouseout', () => {
+      item.style.backgroundColor = 'rgb(234, 234, 233)';
+      });
+};
 const printProducts = async () => {
   addLoading();
   const obj = await fetchProducts('computador');
@@ -92,6 +100,7 @@ const printProducts = async () => {
     const item = createProductItemElement(product);
     const lista = document.querySelector('.items');
     lista.appendChild(item);
+    color(item);
   });
 };
 
@@ -147,8 +156,7 @@ clearButton.addEventListener('click', () => {
   }
   localStorage.clear();
   const price = document.querySelector('.total-price');
-  price.innerText = 0;
-  price.remove();
+  price.innerText = 'Valor da compra: R$ 0';  
 });
 
 localStorage.setItem('counter', JSON.stringify(counter));
