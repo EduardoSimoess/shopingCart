@@ -80,11 +80,8 @@ loading.remove();
 };
 const color = (item) => {
   item.addEventListener('mouseover', () => {
-    item.style.backgroundColor = 'rgb(153, 51, 153)';
+    item.classList.add('grow');
     });
-    item.addEventListener('mouseout', () => {
-      item.style.backgroundColor = 'rgb(234, 234, 233)';
-      });
 };
 const printProducts = async () => {
   addLoading();
